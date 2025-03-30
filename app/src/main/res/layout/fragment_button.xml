@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".fragment.ButtonFragment"
+    android:background="#625B6DF6">
+
+    <!-- Thanh icon trên cùng -->
+    <LinearLayout
+        style="?android:attr/buttonBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <!-- Icon Home - DBDV -->
+        <!-- Icon Home -->
+        <ImageView
+            android:id="@+id/btnDBDV"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="16dp"
+            android:layout_weight="1"
+            android:src="@drawable/home"
+            android:background="@drawable/bg_icon_unselected"
+            android:contentDescription="Trang chủ"
+            android:padding="4dp"
+            android:clickable="true"
+            android:focusable="true"
+            app:tint="#000000" />
+
+        <!-- Icon Person -->
+        <ImageView
+            android:id="@+id/btnCBGV"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:src="@drawable/person"
+            android:background="@drawable/bg_icon_unselected"
+            android:contentDescription="Cán bộ giảng viên"
+            android:padding="4dp"
+            android:clickable="true"
+            android:focusable="true"
+            app:tint="#000000" />
+    </LinearLayout>
+
+    <!-- Tiêu đề -->
+    <TextView
+        android:id="@+id/tvState"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="8dp"
+        android:gravity="center"
+        android:text="@string/danh_ba_don_vi"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <!-- Khu vực tìm kiếm -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <!-- Ô nhập tìm kiếm -->
+        <EditText
+            android:id="@+id/etSearch"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="5"
+            android:layout_marginEnd="8dp"
+            android:drawableStart="@drawable/search"
+            android:drawableTint="#888888"
+            android:hint="@string/t_m_ki_m"
+            android:inputType="text"
+            android:textSize="16sp"
+            android:padding="8dp"
+            android:backgroundTint="#000000" />
+
+        <!-- Icon tìm kiếm -->
+        <ImageView
+            android:id="@+id/btnSort"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="8dp"
+            android:src="@drawable/sort"
+            android:background="@drawable/bg_circle_blue"
+            android:padding="8dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:contentDescription="Tìm kiếm"
+            app:tint="#FFFFFF" />
+
+        <!-- Icon làm mới -->
+        <ImageView
+            android:id="@+id/btnRefresh"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/reload"
+            android:background="@drawable/bg_circle_blue"
+            android:padding="8dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:contentDescription="Làm mới"
+            app:tint="#FFFFFF" />
+    </LinearLayout>
+
+</LinearLayout>

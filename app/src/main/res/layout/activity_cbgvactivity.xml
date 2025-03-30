@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_cbgv"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.CBGVActivity">
+
+    <!-- Toolbar -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_cbgv"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#2196F3"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:title="@string/c_n_b_gi_ng_vi_n"
+        android:titleTextColor="#FFFFFF"
+        app:navigationIcon="@android:drawable/ic_menu_revert" />
+
+    <!-- Ảnh đại diện -->
+    <ImageView
+        android:id="@+id/img_avatar_cbgv"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/male" />
+
+    <!-- Tên -->
+    <TextView
+        android:id="@+id/txt_name_cbgv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="5dp"
+        android:padding="8dp"
+        android:text="@string/h_v_t_n"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <!-- ID -->
+    <TextView
+        android:id="@+id/txt_id_cbgv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginBottom="5dp"
+        android:padding="8dp"
+        android:text="@string/id_gv01"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <!-- Chức vụ -->
+    <TextView
+        android:id="@+id/txt_position_cbgv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginBottom="5dp"
+        android:padding="8dp"
+        android:text="@string/ch_c_v"
+        android:textColor="#333333"
+        android:textSize="16sp" />
+
+    <!-- Đơn vị công tác -->
+    <TextView
+        android:id="@+id/txt_work_unit_cbgv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginBottom="5dp"
+        android:padding="8dp"
+        android:text="@string/n_v_c_ng_t_c"
+        android:textColor="#333333"
+        android:textSize="16sp" />
+
+    <!-- Email -->
+    <TextView
+        android:id="@+id/txt_email_cbgv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginBottom="5dp"
+        android:padding="8dp"
+        android:text="@string/email"
+        android:textColor="#333333"
+        android:textSize="16sp" />
+
+    <!-- Số điện thoại -->
+    <TextView
+        android:id="@+id/txt_phone_cbgv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginBottom="5dp"
+        android:padding="8dp"
+        android:text="@string/s_i_n_tho_i"
+        android:textColor="#333333"
+        android:textSize="16sp" />
+
+    <!-- Hành động: gọi, email, bản đồ -->
+    <LinearLayout
+        android:id="@+id/layout_actions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="16dp">
+
+        <!-- Gọi điện -->
+        <ImageView
+            android:id="@+id/btnCallGV"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginEnd="20dp"
+            android:src="@android:drawable/ic_menu_call"
+            android:contentDescription="Gọi điện"
+            android:background="@drawable/bg_circle_green"
+            android:padding="12dp"
+            app:tint="#FFFFFF" />
+
+        <!-- Gửi Email -->
+        <ImageView
+            android:id="@+id/btnEmailGV"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginEnd="20dp"
+            android:src="@android:drawable/ic_dialog_email"
+            android:contentDescription="Gửi email"
+            android:background="@drawable/bg_circle_blue"
+            android:padding="12dp"
+            app:tint="#FFFFFF" />
+
+        <!-- Xem bản đồ -->
+        <ImageView
+            android:id="@+id/btnMapGV"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@android:drawable/ic_dialog_map"
+            android:contentDescription="Xem bản đồ"
+            android:background="@drawable/bg_circle_blue"
+            android:padding="12dp"
+            app:tint="#FFFFFF" />
+    </LinearLayout>
+</LinearLayout>
