@@ -1,6 +1,11 @@
+
 package com.example.tlucontact.fragment;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -9,39 +14,27 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
-
-import com.example.tlucontact.viewmodel.DBDVSearchViewModel;
 import com.example.tlucontact.R;
 import com.example.tlucontact.adapter.DBDVAdapter;
 import com.example.tlucontact.entity.DBDV;
+import com.example.tlucontact.viewmodel.DBDVSearchViewModel;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
-
 public class DBDVFragment extends Fragment {
-
-
     RecyclerView recyclerView;
-    RecyclerView.Adapter adapter;
+    DBDVAdapter adapter;
     RecyclerView.LayoutManager layoutManager;
-    DBDVSearchViewModel dbdvSearchViewModel;
     ArrayList<DBDV> dbdvs;
-    ArrayList<DBDV> founddbdvs;
+    ArrayList<DBDV> foundDbdv;
+    DBDVSearchViewModel dbdvSearchViewModel;
 
+    public DBDVFragment() {}
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_dbdv, container, false);
     }
 
@@ -51,40 +44,64 @@ public class DBDVFragment extends Fragment {
         recyclerView = view.findViewById(R.id.rvDBDV);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getContext());
-        dbdvSearchViewModel = new ViewModelProvider(requireActivity()).get(DBDVSearchViewModel.class);
-        dbdvs = new ArrayList<>();
-        dbdvs.add(new DBDV("Đại học Thủy Lợi", "DV01", "Khoa học máy tính", "0987654321", R.drawable.computer));
-        dbdvs.add(new DBDV("Đại học Thủy Lợi", "DV02", "Cơ khí", "0971234567", R.drawable.cokhi));
-        dbdvs.add(new DBDV("Đại học Thủy Lợi", "DV03", "Luật", "0967890123", R.drawable.law));
-        dbdvs.add(new DBDV("Đại học Thủy Lợi", "DV04", "Tài nguyên nước", "0912345678", R.drawable.water));
-        dbdvs.add(new DBDV("Đại học Thủy Lợi", "DV05", "Xây dựng", "0923456789", R.drawable.xaydung));
-        founddbdvs = new ArrayList<>(dbdvs);
-        adapter = new DBDVAdapter(founddbdvs);
         recyclerView.setLayoutManager(layoutManager);
+
+        dbdvs = new ArrayList<>();
+        foundDbdv = new ArrayList<>();
+        adapter = new DBDVAdapter(foundDbdv);
         recyclerView.setAdapter(adapter);
-        dbdvSearchViewModel.getSearchDBDV().observe(getViewLifecycleOwner(), query -> {
-            filterData(query);
-        });
 
+        dbdvSearchViewModel = new ViewModelProvider(requireActivity()).get(DBDVSearchViewModel.class);
+        dbdvSearchViewModel.getSearchDBDV().observe(getViewLifecycleOwner(), this::filterData);
 
+        insertSampleDbdvToFirestore();
+        loadDataFromFirestore();
+    }
+
+    private void loadDataFromFirestore() {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("dbdv").get().addOnSuccessListener(queryDocumentSnapshots -> {
+            dbdvs.clear();
+            for (DocumentSnapshot doc : queryDocumentSnapshots) {
+                DBDV dv = doc.toObject(DBDV.class);
+                dbdvs.add(dv);
+            }
+            foundDbdv.clear();
+            foundDbdv.addAll(dbdvs);
+            adapter.notifyDataSetChanged();
+        }).addOnFailureListener(e -> Toast.makeText(getContext(), "Lỗi tải dữ liệu", Toast.LENGTH_SHORT).show());
+    }
+    private void insertSampleDbdvToFirestore() {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        ArrayList<DBDV> dbdvs = new ArrayList<>();
+        dbdvs.add(new DBDV("DV001", "Khoa học máy tính", "Đại học Thủy Lợi ", "02438512301", "computer"));
+        dbdvs.add(new DBDV("DV002", "Cơ khí", "Đại học Thủy Lợi ", "02438512302", "cokhi"));
+        dbdvs.add(new DBDV("DV003", "Luật", "Đại học Thủy Lợi ", "02438512303", "law"));
+        dbdvs.add(new DBDV("DV004", "Tài nguyên nước", "Đại học Thủy Lợi ", "02438512304", "water"));
+        dbdvs.add(new DBDV("DV005", "Xây dựng", "Đại học Thủy Lợi ", "02438512305", "xaydung"));
+        for (DBDV dv : dbdvs) {
+            db.collection("dbdv").document(dv.getId()).set(dv);
+        }
+
+        Toast.makeText(getContext(), "Đã thêm dữ liệu mẫu đơn vị", Toast.LENGTH_SHORT).show();
     }
     private void filterData(String query) {
-        founddbdvs.clear(); // Xóa danh sách hiện tại
+        foundDbdv.clear();
         if (query.isEmpty()) {
-            founddbdvs.addAll(dbdvs); // Hiển thị toàn bộ nếu không nhập gì
+            foundDbdv.addAll(dbdvs);
         } else {
-            boolean check = true;
+            boolean found = false;
             for (DBDV item : dbdvs) {
-                if (item.getId().contains(query)) {
-                    founddbdvs.add(item);
-                    check = false;
+                if (item.getId().toLowerCase().contains(query.toLowerCase())) {
+                    foundDbdv.add(item);
+                    found = true;
                 }
             }
-            if(check){
+            if (!found) {
                 Toast.makeText(getContext(), "Không tìm thấy kết quả", Toast.LENGTH_SHORT).show();
             }
         }
-        adapter.notifyDataSetChanged(); // Cập nhật RecyclerView
+        adapter.notifyDataSetChanged();
     }
-
 }

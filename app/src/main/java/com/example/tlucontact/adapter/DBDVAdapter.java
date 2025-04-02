@@ -1,3 +1,4 @@
+
 package com.example.tlucontact.adapter;
 
 import android.content.Intent;
@@ -6,56 +7,47 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.tlucontact.activity.DBDVActivity;
 import com.example.tlucontact.R;
+import com.example.tlucontact.activity.DBDVActivity;
 import com.example.tlucontact.entity.DBDV;
 
 import java.util.ArrayList;
 
-// Adapter là cầu nối giữa ArrayList và RecyclerView
 public class DBDVAdapter extends RecyclerView.Adapter<DBDVAdapter.DBDVViewHolder> {
-    // Danh sách đơn vị cần truyền cho Adapter
     private final ArrayList<DBDV> dbdvs;
 
-    // Constructor nhận danh sách đơn vị
     public DBDVAdapter(ArrayList<DBDV> dbdvs) {
         this.dbdvs = dbdvs;
     }
 
-    // ViewHolder giúp ánh xạ trực tiếp item trong layout vào RecyclerView
     public static class DBDVViewHolder extends RecyclerView.ViewHolder {
-        // Khai báo các component trong một CardView
         ImageView ivDVSymbol;
-        TextView tvDVName, tvDVAddress, tvDVId;  // Thêm TextView ID
+        TextView tvDVName, tvDVAddress, tvDVId;
 
-        // Hàm khởi tạo ViewHolder
         public DBDVViewHolder(View itemView) {
             super(itemView);
-            // Ánh xạ các component từ layout
             ivDVSymbol = itemView.findViewById(R.id.ivDVSymbol);
             tvDVName = itemView.findViewById(R.id.tvDVName);
             tvDVAddress = itemView.findViewById(R.id.tvDVAddress);
-            tvDVId = itemView.findViewById(R.id.tvDVId);  // Ánh xạ ID
+            tvDVId = itemView.findViewById(R.id.tvDVId);
 
-            // Xử lý sự kiện click
             itemView.setOnClickListener(v -> {
-                // Xác định đối tượng được click và gửi nó sang Activity tương ứng thông qua intent
                 DBDV dbdv = (DBDV) v.getTag();
                 Intent intent = new Intent(v.getContext(), DBDVActivity.class);
-                intent.putExtra("ID", dbdv.getId());  // Truyền ID sang Activity
+                intent.putExtra("ID", dbdv.getId());
                 intent.putExtra("NAME", dbdv.getName());
                 intent.putExtra("ADDRESS", dbdv.getAddress());
                 intent.putExtra("PHONE", dbdv.getPhoneNumber());
-                intent.putExtra("AVATAR", dbdv.getSymbolImage());
+                intent.putExtra("AVATAR", dbdv.getSymbolImage()); // String avatar name
                 v.getContext().startActivity(intent);
             });
         }
     }
 
-    // Tạo ViewHolder và ánh xạ nó vào dbdv_item.xml
     @NonNull
     @Override
     public DBDVViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -63,25 +55,40 @@ public class DBDVAdapter extends RecyclerView.Adapter<DBDVAdapter.DBDVViewHolder
         return new DBDVViewHolder(view);
     }
 
-    // Gắn dữ liệu vào ViewHolder
     @Override
     public void onBindViewHolder(@NonNull DBDVViewHolder holder, int position) {
-        // Lấy đối tượng đơn vị ở vị trí hiện tại
         DBDV dbdv = dbdvs.get(position);
-        holder.itemView.setTag(dbdv);  // Gán đối tượng cho itemView để xử lý sự kiện click
-
-        // Gán dữ liệu từ đối tượng vào các thành phần giao diện
-        holder.ivDVSymbol.setImageResource(dbdv.getSymbolImage());
+        holder.itemView.setTag(dbdv);
         holder.tvDVName.setText(dbdv.getName());
         holder.tvDVAddress.setText(dbdv.getAddress());
-        holder.tvDVId.setText(dbdv.getId());  // Gán giá trị ID vào TextView
+        holder.tvDVId.setText(dbdv.getId());
+
+        // Gán icon theo symbol
+        int avatarRes = R.drawable.tlulogo; // fallback nếu không khớp
+
+        switch (dbdv.getSymbolImage()) {
+            case "computer":
+                avatarRes = R.drawable.computer;
+                break;
+            case "cokhi":
+                avatarRes = R.drawable.cokhi;
+                break;
+            case "law":
+                avatarRes = R.drawable.law;
+                break;
+            case "water":
+                avatarRes = R.drawable.water;
+                break;
+            case "xaydung":
+                avatarRes = R.drawable.xaydung;
+                break;
+        }
+
+        holder.ivDVSymbol.setImageResource(avatarRes);
     }
 
-    // Trả về số lượng phần tử trong danh sách
     @Override
     public int getItemCount() {
         return dbdvs.size();
     }
 }
-
-

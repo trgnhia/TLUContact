@@ -13,7 +13,7 @@ public class WelcomActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcom);
 
-        Button btnContinue = findViewById(R.id.btnContinue);
+        Button btnContinue = findViewById(R.id.btnLogin);
         btnContinue.setOnClickListener(v -> {
             Intent intent = new Intent(WelcomActivity.this, MainActivity.class);
             startActivity(intent);

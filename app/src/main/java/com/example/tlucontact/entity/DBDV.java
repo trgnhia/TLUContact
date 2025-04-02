@@ -3,12 +3,12 @@ package com.example.tlucontact.entity;
 //Lớp đơn vị với các thuộc tính : Mã , Tên , Số điện thoại , Địa chỉ , Hình ảnh.
 public class DBDV {
     private String Id, Name , PhoneNumber , Address;
-    private int SymbolImage;
+    private String SymbolImage;
 
     public DBDV() {
     }
 
-    public DBDV(String address, String id, String name, String phoneNumber, int symbolImage) {
+    public DBDV(String id, String name, String address, String phoneNumber, String symbolImage) {
         Address = address;
         Id = id;
         Name = name;
@@ -48,11 +48,11 @@ public class DBDV {
         PhoneNumber = phoneNumber;
     }
 
-    public int getSymbolImage() {
+    public String getSymbolImage() {
         return SymbolImage;
     }
 
-    public void setSymbolImage(int symbolImage) {
+    public void setSymbolImage(String symbolImage) {
         SymbolImage = symbolImage;
     }
 }
