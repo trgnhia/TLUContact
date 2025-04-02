@@ -10,13 +10,13 @@
     android:id="@+id/cvCBGV">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal">
 <!--        Hình ảnh đại diện -->
         <ImageView
             android:id="@+id/ivGVAvatar"
             android:layout_width="0dp"
-            android:layout_height="110dp"
+            android:layout_height="90dp"
             android:contentDescription="@string/todo"
             android:padding="10dp"
             android:layout_weight="2"
@@ -24,7 +24,7 @@
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:orientation="vertical"
             android:layout_weight="5">
@@ -62,3 +62,8 @@
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>
+
+
+
+
+
